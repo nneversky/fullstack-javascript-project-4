@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { Command } from "commander";
-import { pageLoader } from "../src/index.js";
+import pageLoader from "../src/index.js";
 
 const program = new Command();
 program
@@ -14,6 +14,6 @@ program
 
   .action((url) => {
     const options = program.opts();
-    const loader = pageLoader(url, options);
+    pageLoader(url, options);
   });
 program.parse(process.argv);

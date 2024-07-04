@@ -1,6 +1,11 @@
 import axios from "axios";
 import fsp from "fs/promises";
 import path from "path";
+import saverImg from "./handlers/savedImg.js";
+
+const startHandler = (pathOnFile) => {
+  saverImg(pathOnFile);
+};
 
 export default (url, filePath) => {
   axios
@@ -13,6 +18,7 @@ export default (url, filePath) => {
             .writeFile(filePath, response.data)
             .then((resWrite) => {
               console.log(`Page was successfully downloaded into ${filePath}`);
+              startHandler(filePath);
             })
             .catch((errWrite) => {
               console.log("Page write error", errWrite);
@@ -29,6 +35,7 @@ export default (url, filePath) => {
                   console.log(
                     `Page was successfully downloaded into ${filePath}`
                   );
+                  startHandler(filePath);
                 })
                 .catch((errWrite) => {
                   console.log("Page write error", errWrite);
@@ -40,6 +47,6 @@ export default (url, filePath) => {
         });
     })
     .catch((error) => {
-      console.error(`Invalid URL ${error}`);
+      console.log(`Invalid URL ${error}`);
     });
 };
