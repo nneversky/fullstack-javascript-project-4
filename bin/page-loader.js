@@ -12,6 +12,5 @@ program
     .action((url) => {    
         const options = program.opts();
         const loader = pageLoader(url, options)
-        console.log(loader)
       });
 program.parse(process.argv);
