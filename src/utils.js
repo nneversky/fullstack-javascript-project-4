@@ -5,6 +5,7 @@ import saverImg from "./handlers/savedImg.js";
 
 const startHandler = (pathOnFile) => {
   saverImg(pathOnFile);
+  console.log(`Page was successfully downloaded into ${pathOnFile}`);
 };
 
 export default (url, filePath) => {
@@ -17,7 +18,6 @@ export default (url, filePath) => {
           fsp
             .writeFile(filePath, response.data)
             .then((resWrite) => {
-              console.log(`Page was successfully downloaded into ${filePath}`);
               startHandler(filePath);
             })
             .catch((errWrite) => {
@@ -32,9 +32,6 @@ export default (url, filePath) => {
               fsp
                 .writeFile(filePath, response.data)
                 .then((resWrite) => {
-                  console.log(
-                    `Page was successfully downloaded into ${filePath}`
-                  );
                   startHandler(filePath);
                 })
                 .catch((errWrite) => {
