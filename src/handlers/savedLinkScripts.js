@@ -3,8 +3,9 @@ import cheerio from "cheerio";
 import fetch from "node-fetch";
 import path from "path";
 import debug from "debug";
+import Listr from "listr";
 
-const log = debug('page-loader')
+const log = debug("page-loader");
 
 export default (pathOnFiles, filePathHtml, url) => {
   return new Promise((resolve, reject) => {
@@ -29,37 +30,42 @@ export default (pathOnFiles, filePathHtml, url) => {
           }
         });
 
-        return Promise.all(
+        const tasks = new Listr(
           arrLinks.map((value) => {
             const fileName = path.basename(value);
             const tempPathOnFile = path.join(pathOnFiles, fileName);
 
-            return fetch(value)
-              .then((res) => {
-                if (!res.ok) {
-                  throw new Error(
-                    `Failed to fetch ${value}: ${res.statusText}`
-                  );
-                }
-                return res.arrayBuffer();
-              })
-              .then((arrayBuffer) => {
-                const buffer = Buffer.from(arrayBuffer);
-                return fsp.writeFile(tempPathOnFile, buffer);
-              })
-              .then(() => {
-                console.log(`✅ ${value}`);
-                return tempPathOnFile;
-              })
-              .catch((err) => {
-                console.error(
-                  `Error fetching or saving ${value}: ${err.message}`
-                );
-                throw err;
-              });
+            return {
+              title: (value.length > 90 ? `${value.slice(0, 90)}[...].${value.split('.').reverse()[0]}`: value),
+              task: () =>
+                fetch(value)
+                  .then((res) => {
+                    if (!res.ok) {
+                      throw new Error(
+                        `Failed to fetch ${value}: ${res.statusText}`
+                      );
+                    }
+                    return res.arrayBuffer();
+                  })
+                  .then((arrayBuffer) => {
+                    const buffer = Buffer.from(arrayBuffer);
+                    return fsp
+                      .writeFile(tempPathOnFile, buffer)
+                      .then(() => tempPathOnFile);
+                  })
+                  .catch((err) => {
+                    console.error(
+                      `Error fetching or saving ${value}: ${err.message}`
+                    );
+                    throw err;
+                  }),
+            };
           })
-        ).then((savedPaths) => {
+        );
+
+        return tasks.run().then((ctx) => {
           let updatedHtml = resRead;
+          const savedPaths = Object.values(ctx);
           savedPaths.forEach((tempPathOnFile, index) => {
             const originalUrl = arrLinks[index];
             updatedHtml = updatedHtml.replace(
@@ -67,11 +73,14 @@ export default (pathOnFiles, filePathHtml, url) => {
               tempPathOnFile
             );
           });
+
           return fsp.writeFile(filePathHtml, updatedHtml, "utf-8");
         });
       })
       .then(() => {
-        log(`All files from link and script tags are saved on path: ${pathOnFiles}`)
+        log(
+          `All files from link and script tags are saved on path: ${pathOnFiles}`
+        );
         resolve();
       })
       .catch((err) => {
