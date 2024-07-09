@@ -1,6 +1,9 @@
 import { fileURLToPath } from "url";
 import path from "path";
 import downloadPage from "./utils.js";
+import debug from "debug";
+
+const log = debug('page-loader')
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -15,5 +18,6 @@ export default (url, options) => {
     (options.output || path.join(__dirname, "..", "/user/current-dir")) +
     "\\" +
     nameHtmlFile;
+    log(`Create filepath: ${filePath}`)
   downloadPage(url, filePath);
 };

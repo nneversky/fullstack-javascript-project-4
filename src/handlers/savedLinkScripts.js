@@ -2,6 +2,9 @@ import fsp from "fs/promises";
 import cheerio from "cheerio";
 import fetch from "node-fetch";
 import path from "path";
+import debug from "debug";
+
+const log = debug('page-loader')
 
 export default (pathOnFiles, filePathHtml, url) => {
   return new Promise((resolve, reject) => {
@@ -45,7 +48,7 @@ export default (pathOnFiles, filePathHtml, url) => {
                 return fsp.writeFile(tempPathOnFile, buffer);
               })
               .then(() => {
-                console.log(`Success: ${value}`);
+                console.log(`✅ ${value}`);
                 return tempPathOnFile;
               })
               .catch((err) => {
@@ -68,6 +71,7 @@ export default (pathOnFiles, filePathHtml, url) => {
         });
       })
       .then(() => {
+        log(`All files from link and script tags are saved on path: ${pathOnFiles}`)
         resolve();
       })
       .catch((err) => {

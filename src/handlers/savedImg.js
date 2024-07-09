@@ -2,6 +2,9 @@ import fsp from "fs/promises";
 import cheerio from "cheerio";
 import fetch from "node-fetch";
 import path from "path";
+import debug from "debug";
+
+const log = debug('page-loader')
 
 export default (pathOnFiles, filePath) => {
   return new Promise((resolve, reject) => {
@@ -16,6 +19,7 @@ export default (pathOnFiles, filePath) => {
         fsp
           .mkdir(pathOnFiles, { recursive: true })
           .then(() => {
+            log(`Creation directory: ${pathOnFiles}`)
             const promises = [];
 
             items.each((i, el) => {
@@ -42,7 +46,7 @@ export default (pathOnFiles, filePath) => {
                     return fsp.writeFile(filePathToWrite, buffer);
                   })
                   .then(() => {
-                    console.log(`Success: ${src}`);
+                    console.log(`✅ ${src}`);
                     return fsp.readFile(filePath, "utf-8");
                   })
                   .then((resRead2) => {
@@ -71,6 +75,7 @@ export default (pathOnFiles, filePath) => {
             return Promise.all(promises);
           })
           .then(() => {
+            log(`Images saved on path: ${pathOnFiles}`)
             resolve();
           })
           .catch((err) => {

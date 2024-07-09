@@ -3,6 +3,9 @@ import fsp from "fs/promises";
 import path from "path";
 import saverImg from "./handlers/savedImg.js";
 import savedLinkScripts from "./handlers/savedLinkScripts.js";
+import debug from "debug";
+
+const log = debug('page-loader')
 
 const startHandler = (filePath, url) => {
   const pathOnFiles = filePath.replace(".html", "_files");
@@ -10,14 +13,14 @@ const startHandler = (filePath, url) => {
     .then((resImg) => {
       savedLinkScripts(pathOnFiles, filePath, url)
         .then((resLinkScr) => {
-          console.log(`Page was successfully downloaded into ${pathOnFiles}`);
+          console.log(`Page was successfully downloaded into "${pathOnFiles}"`);
         })
         .catch((errLincScr) => {
           console.error(`Error function errLincScr ${errLincScr}`);
         });
     })
     .catch((errImg) => {
-      console.error(`Error function 'saverImg ${errImg}`);
+      console.error(`Error function saverImg ${errImg}`);
     });
 };
 
@@ -25,6 +28,7 @@ export default (url, filePath) => {
   axios
     .get(url)
     .then((response) => {
+      log('Received html file')
       fsp
         .access(filePath)
         .then((resAcc) => {
@@ -42,6 +46,7 @@ export default (url, filePath) => {
           fsp
             .mkdir(dir, { recursive: true })
             .then((resDir) => {
+              log(`Creation directory: ${dir}`)
               fsp
                 .writeFile(filePath, response.data)
                 .then((resWrite) => {
