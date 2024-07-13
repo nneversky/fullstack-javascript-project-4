@@ -1,14 +1,14 @@
-import axios from "axios";
-import fsp from "fs/promises";
-import path from "path";
-import saverImg from "./handlers/savedImg.js";
-import savedLinkScripts from "./handlers/savedLinkScripts.js";
-import debug from "debug";
+import axios from 'axios';
+import fsp from 'fs/promises';
+import path from 'path';
+import saverImg from './handlers/savedImg.js';
+import savedLinkScripts from './handlers/savedLinkScripts.js';
+import debug from 'debug';
 
-const log = debug('page-loader')
+const log = debug('page-loader');
 
 const startHandler = (filePath, url) => {
-  const pathOnFiles = filePath.replace(".html", "_files");
+  const pathOnFiles = filePath.replace('.html', '_files');
   saverImg(pathOnFiles, filePath)
     .then((resImg) => {
       savedLinkScripts(pathOnFiles, filePath, url)
@@ -28,7 +28,7 @@ export default (url, filePath) => {
   axios
     .get(url)
     .then((response) => {
-      log('Received html file')
+      log('Received html file');
       fsp
         .access(filePath)
         .then((resAcc) => {
@@ -46,7 +46,7 @@ export default (url, filePath) => {
           fsp
             .mkdir(dir, { recursive: true })
             .then((resDir) => {
-              log(`Creation directory: ${dir}`)
+              log(`Creation directory: ${dir}`);
               fsp
                 .writeFile(filePath, response.data)
                 .then((resWrite) => {

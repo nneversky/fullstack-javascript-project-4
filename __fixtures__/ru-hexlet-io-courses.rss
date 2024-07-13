@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Новые уроки на Хекслете</title>
+    <description>Практические уроки по программированию</description>
+    <link>https://ru.hexlet.io/</link>
+    <webMaster>info@hexlet.io</webMaster>
+    <item>
+      <title>Неустаревающие знания / Место в Java разработке</title>
+      <guid isPermaLink="false">4971</guid>
+      <link>https://ru.hexlet.io/courses/java-development-overview-course/lessons/knowledge/theory_unit</link>
+      <description>Цель: Знакомимся с навыками, которые не устаревают и не зависят от времени</description>
+      <pubDate>Fri, 28 Jun 2024 14:19:55 +0000</pubDate>
+    </item>
+    <item>
+      <title>Написание кода / Место в Java разработке</title>
+      <guid isPermaLink="false">4970</guid>
+      <link>https://ru.hexlet.io/courses/java-development-overview-course/lessons/coding/theory_unit</link>
+      <description>Цель: Обсуждаем, насколько важно написание кода в программировании и есть ли другие важные задачи программиста</description>
+      <pubDate>Fri, 28 Jun 2024 14:19:55 +0000</pubDate>
+    </item>
+    <item>
+      <title>Виды компаний и разработки / Место в Java разработке</title>
+      <guid isPermaLink="false">4969</guid>
+      <link>https://ru.hexlet.io/courses/java-development-overview-course/lessons/kinds/theory_unit</link>
+      <description>Цель: Обсуждает, какие бывают компании и виды разработки</description>
+      <pubDate>Fri, 28 Jun 2024 14:19:54 +0000</pubDate>
+    </item>
+    <item>
+      <title>Программирование как профессия / Место в Java разработке</title>
+      <guid isPermaLink="false">4968</guid>
+      <link>https://ru.hexlet.io/courses/java-development-overview-course/lessons/about/theory_unit</link>
+      <description>Цель: Выясняем, что такое программирование и чем привлекательна эта профессия</description>
+      <pubDate>Fri, 28 Jun 2024 14:19:54 +0000</pubDate>
+    </item>
+    <item>
+      <title>Введение / Место в Java разработке</title>
+      <guid isPermaLink="false">4967</guid>
+      <link>https://ru.hexlet.io/courses/java-development-overview-course/lessons/requirements/theory_unit</link>
+      <description>Цель: Выясняем, что значит «быть программистом» и как им стать</description>
+      <pubDate>Fri, 28 Jun 2024 14:19:53 +0000</pubDate>
+    </item>
+    <item>
+      <title>Неустаревающие знания / Место в Python разработке</title>
+      <guid isPermaLink="false">4953</guid>
+      <link>https://ru.hexlet.io/courses/python-development-overview/lessons/knowledge/theory_unit</link>
+      <description>Цель: Знакомимся с навыками, которые не устаревают и не зависят от времени</description>
+      <pubDate>Mon, 24 Jun 2024 16:46:38 +0000</pubDate>
+    </item>
+    <item>
+      <title>Написание кода / Место в Python разработке</title>
+      <guid isPermaLink="false">4952</guid>
+      <link>https://ru.hexlet.io/courses/python-development-overview/lessons/coding/theory_unit</link>
+      <description>Цель: Обсуждаем, насколько важно написание кода в программировании и есть ли другие важные задачи программиста</description>
+      <pubDate>Mon, 24 Jun 2024 16:46:37 +0000</pubDate>
+    </item>
+    <item>
+      <title>Виды компаний и разработки / Место в Python разработке</title>
+      <guid isPermaLink="false">4951</guid>
+      <link>https://ru.hexlet.io/courses/python-development-overview/lessons/kinds/theory_unit</link>
+      <description>Цель: Обсуждает, какие бывают компании и виды разработки</description>
+      <pubDate>Mon, 24 Jun 2024 16:46:37 +0000</pubDate>
+    </item>
+    <item>
+      <title>Программирование как профессия / Место в Python разработке</title>
+      <guid isPermaLink="false">4950</guid>
+      <link>https://ru.hexlet.io/courses/python-development-overview/lessons/about/theory_unit</link>
+      <description>Цель: Выясняем, что такое программирование и чем привлекательна эта профессия</description>
+      <pubDate>Mon, 24 Jun 2024 16:46:36 +0000</pubDate>
+    </item>
+    <item>
+      <title>Введение / Место в Python разработке</title>
+      <guid isPermaLink="false">4949</guid>
+      <link>https://ru.hexlet.io/courses/python-development-overview/lessons/requirements/theory_unit</link>
+      <description>Цель: Выясняем, что значит «быть программистом» и как им стать</description>
+      <pubDate>Mon, 24 Jun 2024 16:46:36 +0000</pubDate>
+    </item>
+  </channel>
+</rss>
