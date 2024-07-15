@@ -1,28 +1,10 @@
 import axios from 'axios';
 import fsp from 'fs/promises';
 import path from 'path';
-import saverImg from './handlers/savedImg.js';
-import savedLinkScripts from './handlers/savedLinkScripts.js';
+import saveContent from '../src/saveContent.js';
 import debug from 'debug';
 
 const log = debug('page-loader');
-
-const startHandler = (filePath, url) => {
-  const pathOnFiles = filePath.replace('.html', '_files');
-  saverImg(pathOnFiles, filePath)
-    .then((resImg) => {
-      savedLinkScripts(pathOnFiles, filePath, url)
-        .then((resLinkScr) => {
-          console.log(`Page was successfully downloaded into "${pathOnFiles}"`);
-        })
-        .catch((errLincScr) => {
-          console.error(`Error function errLincScr ${errLincScr}`);
-        });
-    })
-    .catch((errImg) => {
-      console.error(`Error function saverImg ${errImg}`);
-    });
-};
 
 export default (url, filePath) => {
   axios
@@ -35,7 +17,8 @@ export default (url, filePath) => {
           fsp
             .writeFile(filePath, response.data)
             .then((resWrite) => {
-              startHandler(filePath, url);
+              const pathOnFiles = filePath.replace('.html', '_files');
+              saveContent(pathOnFiles, filePath, url);
             })
             .catch((errWrite) => {
               console.log(`Page write error ${errWrite}`);
@@ -50,7 +33,8 @@ export default (url, filePath) => {
               fsp
                 .writeFile(filePath, response.data)
                 .then((resWrite) => {
-                  startHandler(filePath, url);
+                  const pathOnFiles = filePath.replace('.html', '_files');
+                  saveContent(pathOnFiles, filePath, url);
                 })
                 .catch((errWrite) => {
                   console.error(`Page write error ${errWrite}`);
