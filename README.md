@@ -21,6 +21,12 @@ Page Loader is an utility for downloading a page and its resources. This project
 
 #### Calling up help information:
 
+[![asciicast](https://asciinema.org/a/R4gTgfGrrkiEIGkng29iPG4Wz.svg)](https://asciinema.org/a/R4gTgfGrrkiEIGkng29iPG4Wz)ls
+
 #### Downloading
 
-#### Downloading with errors
+[![asciicast](https://asciinema.org/a/wyQfUuP13pIt3xsL7ZA6QapjJ.svg)](https://asciinema.org/a/wyQfUuP13pIt3xsL7ZA6QapjJ)
+
+#### Debugger
+
+[![asciicast](https://asciinema.org/a/ushmD6ypRliNfSNsI8DqHiskl.svg)](https://asciinema.org/a/ushmD6ypRliNfSNsI8DqHiskl)
