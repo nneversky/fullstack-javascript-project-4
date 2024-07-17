@@ -6,46 +6,24 @@ import debug from 'debug';
 
 const log = debug('page-loader');
 
-export default (url, filePath) => {
+export default async (url, filePath) => {
   const pathOnFiles = filePath.replace('.html', '_files');
 
-  axios
-    .get(url)
-    .then((response) => {
-      log('Received html file');
-      fsp
-        .access(filePath)
-        .then((resAcc) => {
-          fsp
-            .writeFile(filePath, response.data)
-            .then((resWrite) => {
-              saveContent(pathOnFiles, filePath, url);
-            })
-            .catch((errWrite) => {
-              console.log(`Page write error ${errWrite}`);
-            });
-        })
-        .catch((errAcc) => {
-          const dir = path.dirname(filePath);
-          fsp
-            .mkdir(dir, { recursive: true })
-            .then((resDir) => {
-              log(`Creation directory: ${dir}`);
-              fsp
-                .writeFile(filePath, response.data)
-                .then((resWrite) => {
-                  saveContent(pathOnFiles, filePath, url);
-                })
-                .catch((errWrite) => {
-                  console.error(`Page write error ${errWrite}`);
-                });
-            })
-            .catch((errDir) => {
-              console.error(`Directory creation error ${errDir}`);
-            });
-        });
-    })
-    .catch((error) => {
-      console.error(`Invalid URL ${error}`);
-    });
+  try {
+    const response = await axios.get(url);
+    log('Received html file');
+
+    try {
+      await fsp.access(filePath);
+    } catch (error) {
+      const dir = path.dirname(filePath);
+      await fsp.mkdir(dir, { recursive: true });
+      log(`Created directory: ${dir}`);
+    }
+
+    await fsp.writeFile(filePath, response.data);
+    saveContent(pathOnFiles, filePath, url);
+  } catch (error) {
+    console.error(`Error: ${error.message}`);
+  }
 };
