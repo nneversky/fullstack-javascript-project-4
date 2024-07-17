@@ -53,7 +53,7 @@ export default (pathOnFiles, filePathHtml, url) => {
                   });
                 })
                 .catch((err) => {
-                  log(`Error fetching or saving ${url}: ${err.message}`);
+                  console.log(`Error fetching or saving ${url}: ${err.message}`);
                   throw err;
                 }),
           };

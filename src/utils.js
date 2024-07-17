@@ -6,24 +6,23 @@ import debug from 'debug';
 
 const log = debug('page-loader');
 
-export default async (url, filePath) => {
+export default (url, filePath) => {
   const pathOnFiles = filePath.replace('.html', '_files');
 
-  try {
-    const response = await axios.get(url);
-    log('Received html file');
+  axios.get(url)
+    .then((response) => {
+      log('Received html file');
 
-    try {
-      await fsp.access(filePath);
-    } catch (error) {
-      const dir = path.dirname(filePath);
-      await fsp.mkdir(dir, { recursive: true });
-      log(`Created directory: ${dir}`);
-    }
-
-    await fsp.writeFile(filePath, response.data);
-    saveContent(pathOnFiles, filePath, url);
-  } catch (error) {
-    console.error(`Error: ${error.message}`);
-  }
+      return fsp.access(filePath)
+        .catch(() => {
+          const dir = path.dirname(filePath);
+          return fsp.mkdir(dir, { recursive: true })
+            .then(() => log(`Created directory: ${dir}`));
+        })
+        .then(() => fsp.writeFile(filePath, response.data))
+        .then(() => saveContent(pathOnFiles, filePath, url));
+    })
+    .catch((error) => {
+      console.error(`Error: ${error.message}`);
+    });
 };
