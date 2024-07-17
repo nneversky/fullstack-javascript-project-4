@@ -7,6 +7,8 @@ import debug from 'debug';
 const log = debug('page-loader');
 
 export default (url, filePath) => {
+  const pathOnFiles = filePath.replace('.html', '_files');
+
   axios
     .get(url)
     .then((response) => {
@@ -17,7 +19,6 @@ export default (url, filePath) => {
           fsp
             .writeFile(filePath, response.data)
             .then((resWrite) => {
-              const pathOnFiles = filePath.replace('.html', '_files');
               saveContent(pathOnFiles, filePath, url);
             })
             .catch((errWrite) => {
@@ -33,7 +34,6 @@ export default (url, filePath) => {
               fsp
                 .writeFile(filePath, response.data)
                 .then((resWrite) => {
-                  const pathOnFiles = filePath.replace('.html', '_files');
                   saveContent(pathOnFiles, filePath, url);
                 })
                 .catch((errWrite) => {

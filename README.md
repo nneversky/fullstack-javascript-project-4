@@ -4,7 +4,7 @@
 
 ### Maintainability Badge:
 
-
+[![Maintainability](https://api.codeclimate.com/v1/badges/27eb92a07d2aeb13b209/maintainability)](https://codeclimate.com/github/nneversky/fullstack-javascript-project-4/maintainability)
 
 # Page Loader
 
