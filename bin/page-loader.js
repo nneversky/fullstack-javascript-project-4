@@ -1,9 +1,6 @@
 #!/usr/bin/env node
 import { Command } from 'commander';
 import pageLoader from '../src/index.js';
-import debug from 'debug';
-
-const log = debug('page-loader');
 
 const program = new Command();
 program
@@ -14,7 +11,8 @@ program
 
   .action((url) => {
     const options = program.opts();
-    log(`Start main function "pageLoader" on url: ${url}`);
-    pageLoader(url, options);
+    pageLoader(url, options)
+      .then((filepath) => console.log(`Page was successfully downloaded into '${filepath}'\n`))
+      .catch((err) => console.log(err));
   });
 program.parse(process.argv);
