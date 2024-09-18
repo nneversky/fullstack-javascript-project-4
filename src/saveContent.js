@@ -8,7 +8,7 @@ import Listr from 'listr';
 const log = debug('page-loader');
 
 export default (pathOnFiles, filePathHtml, url) => {
-  fsp
+  return fsp
     .readFile(filePathHtml, 'utf-8')
     .then((resRead) => {
       const $ = cheerio.load(resRead);

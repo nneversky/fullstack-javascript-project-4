@@ -13,12 +13,12 @@ export default (url, options) => {
     try {
       const hrefURL = new URL(url);
       const nameHtmlFile = `${hrefURL.host.replaceAll('.', '-')}${hrefURL.pathname.replaceAll('/', '-')}.html`;
-      const filePath = (options.output || path.join(__dirname, '..', '/user/current-dir')) + '\\' + nameHtmlFile;
+      const filePath = (options.output || path.join(__dirname, '..')) + '\\' + nameHtmlFile;
       log(`Create filepath: ${filePath}`);
       downloadPage(url, filePath);
-      resolve(filePath);
+      return resolve(filePath);
     } catch (err) {
-      reject(err);
+      return reject(err);
     }
   });
 };

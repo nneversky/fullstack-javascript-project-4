@@ -9,7 +9,7 @@ const log = debug('page-loader');
 export default (url, filePath) => {
   const pathOnFiles = filePath.replace('.html', '_files');
 
-  axios.get(url)
+  return axios.get(url)
     .then((response) => {
       log('Received html file');
 

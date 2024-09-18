@@ -13,6 +13,9 @@ program
     const options = program.opts();
     pageLoader(url, options)
       .then((filepath) => console.log(`Page was successfully downloaded into '${filepath}'\n`))
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err)
+        process.exit(1)
+      });
   });
 program.parse(process.argv);
