@@ -20,8 +20,10 @@ export default (pathOnFiles, filePathHtml, url) => {
         const src = $(el).attr('href') || $(el).attr('src') || $(el).attr('content');
         if (src) {
           try {
+            const searchDomain = (host) => host.split('.').slice(-2).join('.')
             const resourceUrl = new URL(src, url);
-            resources.push({ el, url: resourceUrl.href });
+            if(searchDomain(resourceUrl.host) === searchDomain(new URL(url).host))
+              resources.push({ el, url: resourceUrl.href });
           } catch (e) {
             log(`Error parsing URL ${src}: ${e.message}`);
           }
@@ -53,6 +55,7 @@ export default (pathOnFiles, filePathHtml, url) => {
                   });
                 })
                 .catch((err) => {
+                  log(`Error: ${err}`);
                   console.log(`Error fetching or saving ${url}: ${err.message}`);
                   throw err;
                 }),

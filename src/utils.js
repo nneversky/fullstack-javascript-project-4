@@ -23,6 +23,7 @@ export default (url, filePath) => {
         .then(() => saveContent(pathOnFiles, filePath, url));
     })
     .catch((error) => {
+      log(`Error: ${error.message}`);
       console.error(`Error: ${error.message}`);
     });
 };

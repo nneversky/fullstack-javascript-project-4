@@ -18,6 +18,7 @@ export default (url, options) => {
       downloadPage(url, filePath);
       return resolve(filePath);
     } catch (err) {
+      log(`Error: ${err}`);
       return reject(err);
     }
   });
