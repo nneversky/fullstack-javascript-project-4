@@ -21,7 +21,7 @@ Page Loader is an utility for downloading a page and its resources. This project
 
 #### Calling up help information:
 
-[![asciicast](https://asciinema.org/a/R4gTgfGrrkiEIGkng29iPG4Wz.svg)](https://asciinema.org/a/R4gTgfGrrkiEIGkng29iPG4Wz)ls
+[![asciicast](https://asciinema.org/a/R4gTgfGrrkiEIGkng29iPG4Wz.svg)](https://asciinema.org/a/R4gTgfGrrkiEIGkng29iPG4Wz)
 
 #### Downloading
 
