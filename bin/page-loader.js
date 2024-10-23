@@ -43,8 +43,7 @@ program
     pageLoader(url, options)
       .then((filepath) => console.log(`Page was successfully downloaded into '${filepath}'\n`))
       .catch((err) => {
-        console.error(err);
-        process.exit(1);
+        throw Error(err);
       });
   });
 
