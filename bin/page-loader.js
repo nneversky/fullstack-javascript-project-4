@@ -32,16 +32,12 @@ program
     const options = program.opts();
 
     if (!isValidUrl(url)) {
-      // console.error('Invalid URL. Please provide a valid URL.');
       throw Error('Invalid URL. Please provide a valid URL.')
-      process.exit(1);
     }
 
     const urlExists = await checkUrlExists(url);
     if (!urlExists) {
-      // console.error('URL does not exist or cannot be reached.');
       throw Error('URL does not exist or cannot be reached.')
-      process.exit(1);
     }
 
     pageLoader(url, options)
