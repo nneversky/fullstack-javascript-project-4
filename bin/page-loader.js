@@ -41,9 +41,10 @@ program
     }
 
     pageLoader(url, options)
-      .then((filepath) => console.log(`Page was successfully downloaded into '${filepath}'\n`))
+      .then((filepath) => console.log(`Page was successfully downloaded, to directory - ${options.output || process.cwd()}`))
       .catch((err) => {
-        throw Error(err);
+        console.error(err.message)
+        process.exit(1)
       });
   });
 
