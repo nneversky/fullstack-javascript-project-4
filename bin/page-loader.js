@@ -1,27 +1,9 @@
 #!/usr/bin/env node
 import { Command } from 'commander';
-import axios from 'axios';
 import pageLoader from '../src/index.js';
+import { isUrlOnline } from 'is-url-online';
 
 const program = new Command();
-
-const isValidUrl = (url) => {
-  try {
-    new URL(url);
-    return true;
-  } catch (err) {
-    return false;
-  }
-};
-
-const checkUrlExists = async (url) => {
-  try {
-    await axios.get(url);
-    return true;
-  } catch (err) {
-    return false;
-  }
-};
 
 program
   .version('0.0.1')
@@ -31,21 +13,18 @@ program
   .action(async (url) => {
     const options = program.opts();
 
-    if (!isValidUrl(url)) {
-      throw Error('Invalid URL. Please provide a valid URL.')
-    }
-
-    const urlExists = await checkUrlExists(url);
-    if (!urlExists) {
-      throw Error('URL does not exist or cannot be reached.')
-    }
-
-    pageLoader(url, options)
-      .then((filepath) => console.log(`Page was successfully downloaded, to directory - ${options.output || process.cwd()}`))
-      .catch((err) => {
-        console.error(err.message)
-        process.exit(1)
-      });
+    isUrlOnline(url).then((online) => {
+      if (online) {
+        pageLoader(url, options)
+          .then((filepath) => console.log(`Page was successfully downloaded, to directory - ${options.output || process.cwd()}`))
+          .catch((err) => {
+            console.error(err.message);
+            process.exit(1);
+          });
+      } else {
+        throw Error('Invalid URL');
+      }
+    });
   });
 
 program.parse(process.argv);
