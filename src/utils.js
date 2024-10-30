@@ -9,15 +9,16 @@ const log = debug('page-loader');
 export default (url, filePath) => {
   const pathOnFiles = filePath.replace('.html', '_files');
 
-  return axios.get(url)
+  return axios
+    .get(url)
     .then((response) => {
       log('Received html file');
 
-      return fsp.access(filePath)
+      return fsp
+        .access(filePath)
         .catch(() => {
           const dir = path.dirname(filePath);
-          return fsp.mkdir(dir, { recursive: true })
-            .then(() => log(`Created directory: ${dir}`));
+          return fsp.mkdir(dir, { recursive: true }).then(() => log(`Created directory: ${dir}`));
         })
         .then(() => fsp.writeFile(filePath, response.data))
         .then(() => saveContent(pathOnFiles, filePath, url));

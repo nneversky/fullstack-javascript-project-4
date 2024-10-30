@@ -24,7 +24,7 @@ program
       } else {
         throw Error('Invalid URL');
       }
-    });
+    })
   });
 
 program.parse(process.argv);
