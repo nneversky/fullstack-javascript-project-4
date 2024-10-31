@@ -21,7 +21,7 @@ export default (url, filePath) => {
           return fsp.mkdir(dir, { recursive: true }).then(() => log(`Created directory: ${dir}`));
         })
         .then(() => fsp.writeFile(filePath, response.data))
-        .then(() => saveContent(pathOnFiles, filePath, url));
+        .then(() => {saveContent(pathOnFiles, filePath, url)});
     })
     .catch((error) => {
       log(`Error: ${error.message}`);
