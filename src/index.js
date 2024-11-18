@@ -7,19 +7,27 @@ const log = debug('page-loader');
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const processName = (name, replacer = '-') => name.match(/\w+/g)?.filter((x) => x).join(replacer)
 
-export default (url, options) => {
-  return new Promise((resolve, reject) => {
-    try {
-      const hrefURL = new URL(url);
-      const nameHtmlFile = `${hrefURL.host.replaceAll('.', '-')}${hrefURL.pathname.replaceAll('/', '-')}.html`;
-      const filePath = (options.output || path.join(__dirname, '..')) + '\\' + nameHtmlFile;
-      log(`Create filepath: ${filePath}`);
-      downloadPage(url, filePath);
-      return resolve(filePath);
-    } catch (err) {
-      log(`Error: ${err}`);
-      return reject(err);
-    }
-  });
+export const getExtension = (fileName) => {
+  path.extname(fileName)
+} 
+
+export default (pageUrl, options) => {
+  const url = new URL(pageUrl)
 };
+
+export const urlToFilename = (link, defaultFormat = '.html') => {
+  const {dir, name, ext} = path.parse(link)
+  const slug = processName(path.join(dir, name))
+  const format = ext || defaultFormat
+  return `${slug}${format}`
+}
+
+export const urlToDirname = (link, postfix = '_files') => {
+  const {dir, name, ext} = path.parse(link)
+  const slug = processName(path.join(dir, name))
+  return `${slug}${postfix}`
+}
+
+console.log(urlToDirname('https://ru.hexlet.io/courses'))
