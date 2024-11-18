@@ -29,5 +29,3 @@ export const urlToDirname = (link, postfix = '_files') => {
   const slug = processName(path.join(dir, name))
   return `${slug}${postfix}`
 }
-
-console.log(urlToDirname('https://ru.hexlet.io/courses'))
