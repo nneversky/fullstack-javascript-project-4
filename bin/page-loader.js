@@ -12,8 +12,8 @@ program
   .action(async (url) => {
     const options = program.opts();
 
-    pageLoader(url, options)
-      .then((filepath) => console.log(`Page was successfully downloaded, to directory - ${options.output || process.cwd()}`))
+    pageLoader(url, options.opts)
+      .then((filepath) => console.log(`Page was successfully downloaded, to directory - ${filepath}`))
       .catch((err) => {
         console.error(err.message);
         process.exit(1);
@@ -21,4 +21,3 @@ program
   });
 
 program.parse(process.argv);
- 
