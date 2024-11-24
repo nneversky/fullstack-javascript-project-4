@@ -12,7 +12,7 @@ program
   .action(async (url) => {
     const options = program.opts();
 
-    pageLoader(url, options.opts)
+    pageLoader(url, options.opts.output)
       .then((filepath) => console.log(`Page was successfully downloaded, to directory - ${filepath}`))
       .catch((err) => {
         console.error(err.message);
