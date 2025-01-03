@@ -8,16 +8,16 @@ program
   .version('0.0.1')
   .arguments('<url>')
   .description('Page loader utility')
-  .option('-o, --output [dir]', 'output dir (default: current working directory)', process.cwd())
-  .action(async (url, options) => {
-    try {
-      const { output } = options;
-      const result = await pageLoader(url, { outputDirName: output });
-      console.log(`Page successfully downloaded to: ${result.fullOutputFilename}`);
-    } catch (error) {
-      console.error(`Error: ${error.message}`);
-      process.exit(1);
-    }
+  .option('-o, --output [dir]', 'output dir (default: "/home/user/current-dir")')
+  .action(async (url) => {
+    const options = program.opts();
+
+    pageLoader(url, options.opts.output)
+      .then((filepath) => console.log(`Page was successfully downloaded, to directory - ${filepath}`))
+      .catch((err) => {
+        console.error(err.message);
+        process.exit(1);
+      });
   });
 
 program.parse(process.argv);
