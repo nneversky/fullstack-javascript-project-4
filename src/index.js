@@ -1,17 +1,9 @@
-import { fileURLToPath } from 'url';
 import path from 'path';
 import cheerio from 'cheerio';
 import { urlToFilename, urlToDirname } from './utils.js';
 import debug from 'debug';
 
 const log = debug('page-loader');
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-export const getExtension = (fileName) => {
-  return path.extname(fileName);
-};
 
 const attributeMapping = {
   link: 'href',
@@ -29,10 +21,16 @@ const prepareAssets = (website, assetsDir, htmlData) => {
     const elementsWithUrls = elements
       .map((element) => $(element))
       .filter(($element) => $element.attr(attrName))
-      .map(($element) => ({
-        $element,
-        url: new URL($element.attr(attrName), website),
-      }))
+      .map(($element) => {
+        try {
+          const url = new URL($element.attr(attrName), website);
+          return { $element, url };
+        } catch (e) {
+          log(`Invalid URL: ${$element.attr(attrName)} - ${e.message}`);
+          return null;
+        }
+      })
+      .filter(Boolean)
       .filter(({ url }) => url.hostname === new URL(website).hostname);
 
     elementsWithUrls.forEach(({ $element, url }) => {
@@ -46,12 +44,13 @@ const prepareAssets = (website, assetsDir, htmlData) => {
   return { updatedHtml: $.html(), assets };
 };
 
-export default (pageUrl, options) => {
+export default (pageUrl, options = {}) => {
+  const outputDirName = options.outputDirName || path.resolve(process.cwd(), 'output');
   const url = new URL(pageUrl);
   const slug = `${url.hostname}${url.pathname}`;
   const filename = urlToFilename(slug);
 
-  const fullOutputDirname = path.resolve(process.cwd(), options.outputDirName);
+  const fullOutputDirname = path.resolve(outputDirName);
   const [name, ext] = filename.split('.');
   const extension = ext === 'html' ? '' : '.html';
   const fullOutputFilename = path.join(fullOutputDirname, `${name}${extension}`);
